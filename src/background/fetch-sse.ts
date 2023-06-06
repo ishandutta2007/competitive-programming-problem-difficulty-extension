@@ -1,6 +1,7 @@
 import { createParser } from 'eventsource-parser'
 import { isEmpty } from 'lodash-es'
 import { streamAsyncIterable } from './stream-async-iterable.js'
+import * as cheerio from 'cheerio';
 
 export async function fetchSSE(
   resource: string,
@@ -13,20 +14,19 @@ export async function fetchSSE(
     const error = await resp.json().catch(() => ({}))
     throw new Error(!isEmpty(error) ? JSON.stringify(error) : `${resp.status} ${resp.statusText}`)
   }
-  const parser = createParser((event) => {
-    console.log("event:", event)
-    if (event.type === 'event') {
-      onMessage(event.data)
-    }
-  })
   for await (const chunk of streamAsyncIterable(resp.body!)) {
     try {
-      let str = new TextDecoder().decode(chunk)
-      // console.log("fetchSSE str:", str)
-      str = "<div>abc</div>"
-      str = "apples"
-      console.log("fetchSSE new str:", str)
-      parser.feed(str)
+      const str0 = new TextDecoder().decode(chunk)
+      const htmlDoc = cheerio.load(str0)
+      const users_accepted  = Number(htmlDoc('table tr.lightrow td:nth-child(1)').text())
+      let j = {
+        data: {
+          message: {
+            users_accepted: users_accepted
+          }
+        }
+      };
+      onMessage(j);
     } catch (err) {
       console.log("fetchSSE err:", err)
     }
