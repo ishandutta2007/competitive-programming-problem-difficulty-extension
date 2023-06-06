@@ -9,7 +9,7 @@ export interface SearchEngine {
 export const config: Record<string, SearchEngine> = {
   spoj: {
     inputQuery: ["input[name='query']"],
-    bodyQuery: ['#problem-body'],
+    bodyQuery: ['table.table-condensed tbody'],
     sidebarContainerQuery: ['#ccontent'],
     appendContainerQuery: [],
   },

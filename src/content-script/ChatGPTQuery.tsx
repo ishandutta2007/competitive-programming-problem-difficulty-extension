@@ -12,20 +12,20 @@ import { isBraveBrowser, shouldShowRatingTip } from './utils.js'
 export type QueryStatus = 'success' | 'error' | undefined
 
 interface Props {
-  question: string
+  problem_ids: any
   promptSource: string
   onStatusChange?: (status: QueryStatus) => void
 }
 
-interface Requestion {
-  requestion: string
-  index: number
-  answer: Answer | null
-}
+// interface Requestion {
+//   requestion: string
+//   index: number
+//   answer: Answer | null
+// }
 
-interface ReQuestionAnswerProps {
-  latestAnswerText: string | undefined
-}
+// interface ReQuestionAnswerProps {
+//   latestAnswerText: string | undefined
+// }
 
 function ChatGPTQuery(props: Props) {
   const inputRef = useRef<HTMLInputElement>(null)
@@ -36,10 +36,10 @@ function ChatGPTQuery(props: Props) {
   const [showTip, setShowTip] = useState(false)
   const [status, setStatus] = useState<QueryStatus>()
   const [reError, setReError] = useState('')
-  const [reQuestionDone, setReQuestionDone] = useState(false)
-  const [requestionList, setRequestionList] = useState<Requestion[]>([])
+  // const [reQuestionDone, setReQuestionDone] = useState(false)
+  // const [requestionList, setRequestionList] = useState<Requestion[]>([])
   const [questionIndex, setQuestionIndex] = useState(0)
-  const [reQuestionLatestAnswerText, setReQuestionLatestAnswerText] = useState<string | undefined>()
+  // const [reQuestionLatestAnswerText, setReQuestionLatestAnswerText] = useState<string | undefined>()
 
   useEffect(() => {
     props.onStatusChange?.(status)
@@ -57,16 +57,16 @@ function ChatGPTQuery(props: Props) {
         setStatus('error')
       } else if (msg.event === 'DONE') {
         setDone(true)
-        setReQuestionDone(true)
+        // setReQuestionDone(true)
       }
     }
     port.onMessage.addListener(listener)
-    port.postMessage({ question: props.question })
+    port.postMessage({ problem_ids: props.problem_ids })
     return () => {
       port.onMessage.removeListener(listener)
       port.disconnect()
     }
-  }, [props.question, retry])
+  }, [props.problem_ids, retry])
 
   // retry error on focus
   useEffect(() => {
@@ -91,7 +91,7 @@ function ChatGPTQuery(props: Props) {
       console.log('answer', answer)
       captureEvent('show_answer', { host: location.host, language: navigator.language })
     }
-  }, [props.question, status])
+  }, [props.problem_ids, status])
 
   const openOptionsPage = useCallback(() => {
     Browser.runtime.sendMessage({ type: 'OPEN_OPTIONS_PAGE' })

@@ -36,11 +36,12 @@ async function mount(question: string, promptSource: string, siteConfig: SearchE
       appendContainer.appendChild(container)
     }
   }
-  console.debug('question:', question)
+  const problem_ids = question.split(" ")
+  console.debug('problem_ids:', problem_ids)
 
   render(
     <ChatGPTContainer
-      question={question}
+      problem_ids={problem_ids}
       promptSource={promptSource}
       triggerMode={userConfig.triggerMode || 'always'}
     />,

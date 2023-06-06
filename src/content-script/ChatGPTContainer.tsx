@@ -6,7 +6,7 @@ import ChatGPTCard from './ChatGPTCard'
 import { QueryStatus } from './ChatGPTQuery'
 
 interface Props {
-  question: string
+  problem_ids: any
   promptSource: string
   triggerMode: TriggerMode
 }
@@ -22,7 +22,7 @@ function ChatGPTContainer(props: Props) {
     <>
       <div className="chat-gpt-card">
         <ChatGPTCard
-          question={props.question}
+          problem_ids={props.problem_ids}
           promptSource={props.promptSource}
           triggerMode={props.triggerMode}
           onStatusChange={setQueryStatus}

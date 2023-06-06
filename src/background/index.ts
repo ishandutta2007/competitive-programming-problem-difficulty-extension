@@ -7,7 +7,7 @@ import { Provider } from './types'
 
 async function generateAnswers(
   port: Browser.Runtime.Port,
-  question: string,
+  problem_ids: string,
   // conversationId: string | undefined,
   // parentMessageId: string | undefined,
 ) {
@@ -31,7 +31,7 @@ async function generateAnswers(
   })
 
   const { cleanup } = await provider.generateAnswer({
-    problem_id: "ANADIV",
+    problem_id: problem_ids[0],
     // signal: controller.signal,
     onEvent(event) {
       console.log("index event", event);
@@ -50,7 +50,7 @@ Browser.runtime.onConnect.addListener((port) => {
   port.onMessage.addListener(async (msg) => {
     console.debug('received msg', msg)
     try {
-      await generateAnswers(port, msg.question)//, msg.conversationId, msg.parentMessageId)
+      await generateAnswers(port, msg.problem_ids)//, msg.conversationId, msg.parentMessageId)
     } catch (err: any) {
       console.error(err)
       port.postMessage({ error: err.message })

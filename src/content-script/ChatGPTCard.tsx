@@ -4,7 +4,7 @@ import { TriggerMode } from '../config'
 import ChatGPTQuery, { QueryStatus } from './ChatGPTQuery'
 
 interface Props {
-  question: string
+  problem_ids: any
   promptSource: string
   triggerMode: TriggerMode
   onStatusChange?: (status: QueryStatus) => void
@@ -21,7 +21,6 @@ function ChatGPTCard(props: Props) {
   }
   return (
     <p className="icon-and-text cursor-pointer" onClick={() => setTriggered(true)}>
-      <SearchIcon size="small" /> Ask Spoj Difficulty to solve
     </p>
   )
 }

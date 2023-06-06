@@ -32,7 +32,7 @@ export enum Language {
   Portuguese = 'portuguese',
 }
 
-export const Prompt ='Here is problem:'
+export const Prompt =''
 
 export interface SitePrompt {
   site: string
