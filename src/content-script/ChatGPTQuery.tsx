@@ -17,16 +17,6 @@ interface Props {
   onStatusChange?: (status: QueryStatus) => void
 }
 
-// interface Requestion {
-//   requestion: string
-//   index: number
-//   answer: Answer | null
-// }
-
-// interface ReQuestionAnswerProps {
-//   latestAnswerText: string | undefined
-// }
-
 function ChatGPTQuery(props: Props) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [answer, setAnswer] = useState<Answer | null>(null)
