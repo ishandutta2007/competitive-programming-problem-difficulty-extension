@@ -30,20 +30,33 @@ async function generateAnswers(
     // cleanup?.()
   })
 
-  const { cleanup } = await provider.generateAnswer({
-    problem_id: problem_ids[0],
-    // signal: controller.signal,
-    onEvent(event) {
-      console.log("index event", event);
-      if (event.type === 'done') {
-        port.postMessage({ event: 'DONE' })
-        return
-      }
-      port.postMessage(event.data)
-    },
-    // conversationId: conversationId,
-    // parentMessageId: parentMessageId,
-  })
+  problem_ids.forEach(function (problem_id, i) {
+    // console.log('%d: %s', i, problem_id);
+    // for (const problem_id of problem_ids) {
+
+    // const { cleanup } ;
+    setTimeout(
+       provider.generateAnswer({
+        problem_id: problem_id,
+        // signal: controller.signal,
+        onEvent(event) {
+          console.log("index event", event);
+          if (event.type === 'done') {
+            port.postMessage({ event: 'DONE' })
+            return
+          } else {
+            // console.log("event.data",event.data)
+            Object.assign(event.data, {"problem_ids": problem_id});
+            console.log("event.data",event.data)
+          }
+          port.postMessage(event.data)
+        },
+        // conversationId: conversationId,
+        // parentMessageId: parentMessageId,
+      })
+    // }
+   , i*200);
+  });
 }
 
 Browser.runtime.onConnect.addListener((port) => {
