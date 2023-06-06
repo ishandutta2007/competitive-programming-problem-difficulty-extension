@@ -11,6 +11,7 @@ export type Event =
 
 export interface GenerateAnswerParams {
   prompt: string
+  problem_id: string
   onEvent: (event: Event) => void
   // signal?: AbortSignal
   // conversationId?: string

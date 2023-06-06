@@ -31,7 +31,7 @@ async function generateAnswers(
   })
 
   const { cleanup } = await provider.generateAnswer({
-    prompt: question,
+    problem_id: "ANADIV",
     // signal: controller.signal,
     onEvent(event) {
       console.log("index event", event);

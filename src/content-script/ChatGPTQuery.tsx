@@ -98,6 +98,8 @@ function ChatGPTQuery(props: Props) {
   }, [])
 
   if (answer) {
+    console.log("Final answer", answer);
+    answer.score = answer.score + "XXX";
     return (
       <div className="markdown-body gpt-markdown" id="gpt-answer" dir="auto">
         <div className="gpt-header">

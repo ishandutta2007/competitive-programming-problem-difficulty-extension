@@ -19,7 +19,7 @@ export class ChatGPTProvider implements Provider {
     const cleanup = () => {
     }
 
-    await fetchSSE('https://www.spoj.com/ranks/ANADIV/', {
+    await fetchSSE(`https://www.spoj.com/ranks/${params.problem_id}/`, {
       method: 'GET',
       signal: params.signal,
       headers: {
@@ -57,7 +57,7 @@ export class ChatGPTProvider implements Provider {
       },
     })
 
-    await fetchSSE('https://www.spoj.com/problems/ANADIV/', {
+    await fetchSSE(`https://www.spoj.com/problems/${params.problem_id}/`, {
       method: 'GET',
       signal: params.signal,
       headers: {
@@ -88,7 +88,7 @@ export class ChatGPTProvider implements Provider {
           params.onEvent({
             type: 'answer',
             data: {
-              score: score.toString()
+              score: score
             },
           })
         }
