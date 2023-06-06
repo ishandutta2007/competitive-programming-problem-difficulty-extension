@@ -34,6 +34,7 @@ async function generateAnswers(
     prompt: question,
     // signal: controller.signal,
     onEvent(event) {
+      console.log("index event", event);
       if (event.type === 'done') {
         port.postMessage({ event: 'DONE' })
         return

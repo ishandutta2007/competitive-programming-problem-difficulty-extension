@@ -9,7 +9,7 @@ export async function fetchSSE(
 ) {
   const { onMessage, ...fetchOptions } = options
   const resp = await fetch(resource, fetchOptions)
-  console.log("fetchSSE resp:", resp)
+  // console.log("fetchSSE resp:", resp)
   if (!resp.ok) {
     const error = await resp.json().catch(() => ({}))
     throw new Error(!isEmpty(error) ? JSON.stringify(error) : `${resp.status} ${resp.statusText}`)
@@ -18,10 +18,12 @@ export async function fetchSSE(
     try {
       const str0 = new TextDecoder().decode(chunk)
       const htmlDoc = cheerio.load(str0)
+      const create_date  = htmlDoc('table tbody tr:nth-child(2) td:nth-child(2)').text()
       const users_accepted  = Number(htmlDoc('table tr.lightrow td:nth-child(1)').text())
       let j = {
         data: {
           message: {
+            create_date: create_date,
             users_accepted: users_accepted
           }
         }

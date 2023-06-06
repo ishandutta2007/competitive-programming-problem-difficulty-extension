@@ -1,5 +1,5 @@
 export interface Answer {
-  text: string
+  score: any
   messageId: string
   conversationId: string
   parentMessageId: string

@@ -48,7 +48,8 @@ function ChatGPTQuery(props: Props) {
   useEffect(() => {
     const port = Browser.runtime.connect()
     const listener = (msg: any) => {
-      if (msg.text) {
+      console.log("msg", msg)
+      if (msg.score) {
         setAnswer(msg)
         setStatus('success')
       } else if (msg.error) {
@@ -96,69 +97,6 @@ function ChatGPTQuery(props: Props) {
     Browser.runtime.sendMessage({ type: 'OPEN_OPTIONS_PAGE' })
   }, [])
 
-  // requestion
-  useEffect(() => {
-    if (!requestionList[questionIndex]) return
-    const port = Browser.runtime.connect()
-    const listener = (msg: any) => {
-      try {
-        if (msg.text) {
-          const requestionListValue = requestionList
-          requestionListValue[questionIndex].answer = msg
-          setRequestionList(requestionListValue)
-          const latestAnswerText = requestionList[questionIndex]?.answer?.text
-          setReQuestionLatestAnswerText(latestAnswerText)
-        } else if (msg.event === 'DONE') {
-          setReQuestionDone(true)
-          setQuestionIndex(questionIndex + 1)
-        }
-      } catch {
-        setReError(msg.error)
-      }
-    }
-    port.onMessage.addListener(listener)
-    port.postMessage({
-      question: requestionList[questionIndex].requestion,
-      conversationId: answer?.conversationId,
-      parentMessageId:
-        questionIndex == 0
-          ? answer?.messageId
-          : requestionList[questionIndex - 1].answer?.messageId,
-    })
-    return () => {
-      port.onMessage.removeListener(listener)
-      port.disconnect()
-    }
-  }, [requestionList, questionIndex, answer?.conversationId, answer?.messageId])
-
-  // * Requery Handler Function
-  const requeryHandler = useCallback(() => {
-    if (inputRef.current) {
-      setReQuestionDone(false)
-      const requestion = inputRef.current.value
-      setRequestionList([...requestionList, { requestion, index: questionIndex, answer: null }])
-      inputRef.current.value = ''
-    }
-  }, [requestionList, questionIndex])
-
-  const ReQuestionAnswerFixed = ({ text }: { text: string | undefined }) => {
-    if (!text) return <p className="text-[#b6b8ba] animate-pulse">Answering...</p>
-    return (
-      <ReactMarkdown rehypePlugins={[[rehypeHighlight, { detect: true }]]}>{text}</ReactMarkdown>
-    )
-  }
-
-  const ReQuestionAnswer = ({ latestAnswerText }: ReQuestionAnswerProps) => {
-    if (!latestAnswerText || requestionList[requestionList.length - 1]?.answer?.text == undefined) {
-      return <p className="text-[#b6b8ba] animate-pulse">Answering...</p>
-    }
-    return (
-      <ReactMarkdown rehypePlugins={[[rehypeHighlight, { detect: true }]]}>
-        {latestAnswerText}
-      </ReactMarkdown>
-    )
-  }
-
   if (answer) {
     return (
       <div className="markdown-body gpt-markdown" id="gpt-answer" dir="auto">
@@ -168,56 +106,10 @@ function ChatGPTQuery(props: Props) {
             <GearIcon size={14} />
           </span>
           <span className="mx-2 text-base text-gray-500">{`"${props.promptSource}" prompt is used`}</span>
-          <ChatGPTFeedback
-            messageId={answer.messageId}
-            conversationId={answer.conversationId}
-            latestAnswerText={answer.text}
-          />
         </div>
         <ReactMarkdown rehypePlugins={[[rehypeHighlight, { detect: true }]]}>
-          {answer.text}
+          {answer.score}
         </ReactMarkdown>
-        <div className="question-container">
-          {requestionList.map((requestion) => (
-            <div key={requestion.index}>
-              <div className="font-bold">{`Q${requestion.index + 1} : ${
-                requestion.requestion
-              }`}</div>
-              {reError ? (
-                <p>
-                  Failed to load response from ChatGPT:
-                  <span className="break-all block">{reError}</span>
-                </p>
-              ) : requestion.index < requestionList.length - 1 ? (
-                <ReQuestionAnswerFixed text={requestion.answer?.text} />
-              ) : (
-                <ReQuestionAnswer latestAnswerText={reQuestionLatestAnswerText} />
-              )}
-            </div>
-          ))}
-        </div>
-
-        {done && (
-          <form
-            id="requestion"
-            style={{ display: 'flex' }}
-            onSubmit={(e) => {
-              // submit when press enter key
-              e.preventDefault()
-            }}
-          >
-            <input
-              disabled={!reQuestionDone}
-              type="text"
-              ref={inputRef}
-              placeholder="Tell Me More"
-              id="question"
-            />
-            <button id="submit" onClick={requeryHandler}>
-              ASK
-            </button>
-          </form>
-        )}
       </div>
     )
   }
