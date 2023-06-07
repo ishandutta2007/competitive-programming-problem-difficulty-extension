@@ -1,6 +1,6 @@
 import Browser from 'webextension-polyfill'
 import { getProviderConfigs, ProviderType } from '../config'
-import { ChatGPTProvider } from './providers/chatgpt'
+import { ChatGPTProvider } from './providers/spoj'
 // import { ChatGPTProvider, getChatGPTAccessToken, sendMessageFeedback } from './providers/chatgpt'
 import { OpenAIProvider } from './providers/openai'
 import { Provider } from './types'
