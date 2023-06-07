@@ -81,9 +81,3 @@ Browser.runtime.onMessage.addListener(async (message) => {
   //   return getChatGPTAccessToken()
   }
 })
-
-Browser.runtime.onInstalled.addListener((details) => {
-  if (details.reason === 'install') {
-    Browser.runtime.openOptionsPage()
-  }
-})
