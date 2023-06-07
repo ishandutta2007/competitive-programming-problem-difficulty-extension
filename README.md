@@ -6,72 +6,11 @@
 
 ## Screenshot
 
-<img width="1031" alt="image" src="https://raw.githubusercontent.com/ishandutta2007/competitive-programming-problem-difficulty-extension/main/screenshots/spoj.png">
-
-<img width="1031" alt="image" src="https://raw.githubusercontent.com/ishandutta2007/competitive-programming-problem-difficulty-extension/main/screenshots/codeforces.png">
+<img width="1031" alt="image" src="https://raw.githubusercontent.com/ishandutta2007/competitive-programming-problem-difficulty-extension/main/screenshots/spoj_account_1280x800.png">
 
 ## Avaiable Sites (TBA or TBA as a configuration feature)
 * "https://www.spoj.com/*",
-* "https://codeforces.com/*",
-* "https://projecteuler.net/problem=*",
-* "https://poj.org/problem?id=*",
-* "https://atcoder.jp/*"
-* "https://www.hackerrank.com/challenges/*"
-* "https://www.hackerearth.com/*",
-* "https://open.kattis.com/problems/*",
-* "https://dmoj.ca/problem/*",
-* "https://acm.timus.ru/problem.aspx*",
-* "https://www.eolymp.com/en/problems/*",
-* "https://community.topcoder.com/stat?c=problem_statement*"
-* "https://lightoj.com/problem/*",
-* "https://toph.co/p/*",
-* "https://cses.fi/*",
-* "https://www.pramp.com/*",
-* "https://www.interviewbit.com/problems/*",
-* "https://leetcode.com/*",
-* "https://www.codechef.com/*",
 
-(To be fixed:)
-
-* "https://my.newtonschool.co/playground/code/*",
-* "https://geeksforgeeks.org",
-* "https://codedrills.io/problems/*",
-* "https://www.algoexpert.io/questions/*",
-
-### TODO
-
-For above sites most probably we have to incercept graphql query
-
-
-POST https://leetcode.com/graphql/
-
-payload: {
-    "query": "
-        query questionContent($titleSlug: String!) {
-            question(titleSlug: $titleSlug) {
-                content
-                mysqlSchemas
-            }
-        }
-    ",
-    "variables": {
-        "titleSlug": "letter-combinations-of-a-phone-number"
-    },
-    "operationName": "questionContent"
-}
-
-........
-
-GET https://www.codechef.com/api/contests/PRACTICE/problems/FLOW001
-
-........
-POST https://prod.api.algoexpert.io/api/problems/v1/algoexpert/coding-questions/get
-
-......
-
-## Custom Prompt
-You can change the prompt.
-<img width="1031" alt="image" src="https://raw.githubusercontent.com/ishandutta2007/competitive-programming-problem-difficulty-extension/main/screenshots/prompt.png">
 
 ## Troubleshooting
 
@@ -94,7 +33,3 @@ Enable "Allow access to search page results" in the extension management page
 3. `npm run build`
 4. Load `build/chromium/` or `build/firefox/` directory to your browser
 
-## Credit
-
-This project is inspired by [ZohaibAhmed/ChatGPT-Google](https://github.com/ZohaibAhmed/ChatGPT-Google) and https://github.com/wong2/chatgpt-google-extension
-This project is inspired by [ZohaibAhmed/ChatGPT-Google](https://github.com/ZohaibAhmed/ChatGPT-Google) and wong2/chatgpt-google-extension
