@@ -92,7 +92,7 @@ function OptionsPage(props: { theme: Theme; onThemeChange: (theme: Theme) => voi
       </nav>
       <main className="w-[600px] mx-auto mt-14">
         <Text h2>Options</Text>
-        Nothing much to confugure at this point. Do create an issue at <a href="https://github.com/ishandutta2007/competitive-programming-problem-difficulty-extension/issues"> github </a> if you need to make something configurable.
+        Nothing much to confugure at this point. Do create an issue at <a href="https://github.com/ishandutta2007/competitive-programming-problem-difficulty-extension/issues"> github </a> if you want something to be configurable.
       </main>
     </div>
   )

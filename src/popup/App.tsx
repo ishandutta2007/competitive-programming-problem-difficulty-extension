@@ -60,10 +60,7 @@ function App() {
         return (
           <div className="grow flex flex-col justify-center">
             <p className="text-base px-2 text-center">
-              Please login and pass Cloudflare check at{' '}
-              <a href="https://chat.openai.com" target="_blank" rel="noreferrer">
-                chat.openai.com
-              </a>
+              Nothing much to confugure at this point. Do create an issue at <a href="https://github.com/ishandutta2007/competitive-programming-problem-difficulty-extension/issues"> github </a> if you want something to be configurable.
             </p>
           </div>
         )
