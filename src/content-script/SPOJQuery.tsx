@@ -6,7 +6,7 @@ import rehypeHighlight from 'rehype-highlight'
 import Browser from 'webextension-polyfill'
 import { captureEvent } from '../analytics'
 import { Answer } from '../messaging'
-import ChatGPTFeedback from './ChatGPTFeedback'
+import SPOJFeedback from './SPOJFeedback'
 import { isBraveBrowser, shouldShowRatingTip } from './utils.js'
 
 export type QueryStatus = 'success' | 'error' | undefined
@@ -58,7 +58,7 @@ function isElementInViewport(el) {
   );
 }
 
-function ChatGPTQuery(props: Props) {
+function SPOJQuery(props: Props) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [answer, setAnswer] = useState<Answer | null>(null)
   const [error, setError] = useState('')
@@ -139,7 +139,7 @@ function ChatGPTQuery(props: Props) {
     if (desired_matching_elem) {
       let bghex = rgbToHex(Math.round(answer.score), 0, 0);
       try {
-        if (!isElementInViewport(desired_matching_elem)) desired_matching_elem.scrollIntoView({behavior: 'smooth'});
+        // if (!isElementInViewport(desired_matching_elem)) desired_matching_elem.scrollIntoView({behavior: 'smooth'});
         desired_matching_elem.style.backgroundColor = bghex.toString()
         if (!props.problem_ids_done) props.problem_ids_done = []
         props.problem_ids_done.push(answer.problem_id);
@@ -154,4 +154,4 @@ function ChatGPTQuery(props: Props) {
   return ( <p></p> )
 }
 
-export default memo(ChatGPTQuery)
+export default memo(SPOJQuery)

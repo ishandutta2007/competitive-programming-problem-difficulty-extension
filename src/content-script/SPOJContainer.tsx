@@ -2,8 +2,8 @@ import { useState } from 'react'
 import useSWRImmutable from 'swr/immutable'
 import { fetchPromotion } from '../api'
 import { TriggerMode } from '../config'
-import ChatGPTCard from './ChatGPTCard'
-import { QueryStatus } from './ChatGPTQuery'
+import SPOJCard from './SPOJCard'
+import { QueryStatus } from './SPOJQuery'
 
 interface Props {
   problem_ids: any
@@ -11,7 +11,7 @@ interface Props {
   triggerMode: TriggerMode
 }
 
-function ChatGPTContainer(props: Props) {
+function SPOJContainer(props: Props) {
   const [queryStatus, setQueryStatus] = useState<QueryStatus>()
   const query = useSWRImmutable(
     queryStatus === 'success' ? 'promotion' : undefined,
@@ -21,7 +21,7 @@ function ChatGPTContainer(props: Props) {
   return (
     <>
       <div className="chat-gpt-card">
-        <ChatGPTCard
+        <SPOJCard
           problem_ids={props.problem_ids}
           promptSource={props.promptSource}
           triggerMode={props.triggerMode}
@@ -32,4 +32,4 @@ function ChatGPTContainer(props: Props) {
   )
 }
 
-export default ChatGPTContainer
+export default SPOJContainer

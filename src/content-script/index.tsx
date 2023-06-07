@@ -2,7 +2,7 @@ import { render } from 'preact'
 import '../base.css'
 import { getUserConfig, Theme } from '../config'
 import { detectSystemColorScheme } from '../utils'
-import ChatGPTContainer from './ChatGPTContainer'
+import SPOJContainer from './SPOJContainer'
 import { config, SearchEngine } from './search-engine-configs'
 import './styles.scss'
 import { getPossibleElementByQuerySelector } from './utils'
@@ -40,7 +40,7 @@ async function mount(question: string, promptSource: string, siteConfig: SearchE
   console.debug('problem_ids:', problem_ids)
 
   render(
-    <ChatGPTContainer
+    <SPOJContainer
       problem_ids={problem_ids}
       promptSource={promptSource}
       triggerMode={userConfig.triggerMode || 'always'}
@@ -54,7 +54,7 @@ const siteName = location.hostname.match(siteRegex)![0]
 const siteConfig = config[siteName]
 
 async function run() {
-  console.debug('Try to Mount ChatGPT on', siteName)
+  console.debug('Try to Mount SPOJ on', siteName)
 
   if (siteConfig.bodyQuery) {
     const bodyElement = getPossibleElementByQuerySelector(siteConfig.bodyQuery)
