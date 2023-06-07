@@ -13,6 +13,7 @@ export type QueryStatus = 'success' | 'error' | undefined
 
 interface Props {
   problem_ids: any
+  problem_ids_done: any
   promptSource: string
   onStatusChange?: (status: QueryStatus) => void
 }
@@ -35,6 +36,26 @@ function componentToHex(c) {
 
 function rgbToHex(r, g, b) {
   return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
+
+function isElementInViewport(el) {
+  var top = el.offsetTop;
+  var left = el.offsetLeft;
+  var width = el.offsetWidth;
+  var height = el.offsetHeight;
+
+  while(el.offsetParent) {
+    el = el.offsetParent;
+    top += el.offsetTop;
+    left += el.offsetLeft;
+  }
+
+  return (
+    top < (window.pageYOffset + window.innerHeight) &&
+    left < (window.pageXOffset + window.innerWidth) &&
+    (top + height) > window.pageYOffset &&
+    (left + width) > window.pageXOffset
+  );
 }
 
 function ChatGPTQuery(props: Props) {
@@ -90,6 +111,7 @@ function ChatGPTQuery(props: Props) {
   }, [error])
 
   useEffect(() => {
+    props.problem_ids_done = []
     shouldShowRatingTip().then((show) => setShowTip(show))
   }, [])
 
@@ -114,9 +136,20 @@ function ChatGPTQuery(props: Props) {
         break;
       }
     }
-    if (desired_matching_elem){
+    if (desired_matching_elem) {
       let bghex = rgbToHex(Math.round(answer.score), 0, 0);
-      desired_matching_elem.style.backgroundColor = bghex.toString();
+      try {
+        if (!isElementInViewport(desired_matching_elem)) desired_matching_elem.scrollIntoView({behavior: 'smooth'});
+        // setTimeout(
+          desired_matching_elem.style.backgroundColor = bghex.toString()
+          // , 20);
+        if (!props.problem_ids_done) props.problem_ids_done = []
+        props.problem_ids_done.push(answer.problem_id);
+      } catch (error) {
+        console.log("scrollIntoView failed", error);
+      }
+      console.log("problem_id len", props.problem_ids.length);
+      console.log("problem_ids_done len", props.problem_ids_done.length);
     }
   }
 
