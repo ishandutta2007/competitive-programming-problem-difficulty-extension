@@ -1,8 +1,8 @@
 {
   "appName": {
-    "message": "Spoj Difficulty - Competitive Programming Assistant"
+    "message": "SPOJ Difficulty Indicator"
   },
   "appDesc": {
-    "message": "SPOJ Difficulty Indicator."
+    "message": "Colors your SPOJ Problems based on difficulty."
   }
 }

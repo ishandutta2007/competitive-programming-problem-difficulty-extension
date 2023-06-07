@@ -1,5 +1,5 @@
 {
-  "name": "chat-gpt-google-extension",
+  "name": "competitive-programming-problem-difficulty-extension",
   "author": "ishandutta2007",
   "scripts": {
     "build": "node build.mjs",
