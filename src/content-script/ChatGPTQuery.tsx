@@ -46,10 +46,7 @@ function ChatGPTQuery(props: Props) {
   const [showTip, setShowTip] = useState(false)
   const [status, setStatus] = useState<QueryStatus>()
   const [reError, setReError] = useState('')
-  // const [reQuestionDone, setReQuestionDone] = useState(false)
-  // const [requestionList, setRequestionList] = useState<Requestion[]>([])
   const [questionIndex, setQuestionIndex] = useState(0)
-  // const [reQuestionLatestAnswerText, setReQuestionLatestAnswerText] = useState<string | undefined>()
 
   useEffect(() => {
     props.onStatusChange?.(status)
@@ -120,23 +117,10 @@ function ChatGPTQuery(props: Props) {
     if (desired_matching_elem){
       let bghex = rgbToHex(Math.round(answer.score), 0, 0);
       desired_matching_elem.style.backgroundColor = bghex.toString();
-      // console.log("set bgcol of ", answer.problem_id, "to", bghex.toString(), "(", Math.round(answer.score), ")");
     }
-    // return (
-    //   <div className="markdown-body gpt-markdown" id="gpt-answer" dir="auto">
-    //   </div>
-    // )
   }
 
-  return (
-    <p></p>
-  )
-  return (
-    <p>
-    </p>
-  )
-
-  // return <p className="text-[#b6b8ba] animate-pulse">Waiting for ChatGPT solution...</p>
+  return ( <p></p> )
 }
 
 export default memo(ChatGPTQuery)
