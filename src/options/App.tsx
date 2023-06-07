@@ -75,7 +75,7 @@ function OptionsPage(props: { theme: Theme; onThemeChange: (theme: Theme) => voi
         </div>
         <div className="flex flex-row gap-3">
           <a
-            href="https://github.com/ishandutta2007/chatgpt-competitive-programming-extension/issues"
+            href="https://github.com/ishandutta2007/competitive-programming-problem-difficulty-extension/issues"
             target="_blank"
             rel="noreferrer"
           >
