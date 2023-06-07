@@ -140,9 +140,7 @@ function ChatGPTQuery(props: Props) {
       let bghex = rgbToHex(Math.round(answer.score), 0, 0);
       try {
         if (!isElementInViewport(desired_matching_elem)) desired_matching_elem.scrollIntoView({behavior: 'smooth'});
-        // setTimeout(
-          desired_matching_elem.style.backgroundColor = bghex.toString()
-          // , 20);
+        desired_matching_elem.style.backgroundColor = bghex.toString()
         if (!props.problem_ids_done) props.problem_ids_done = []
         props.problem_ids_done.push(answer.problem_id);
       } catch (error) {
