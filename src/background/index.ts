@@ -1,7 +1,6 @@
 import Browser from 'webextension-polyfill'
 import { getProviderConfigs, ProviderType } from '../config'
 import { SPOJProvider } from './providers/spoj'
-import { OpenAIProvider } from './providers/openai'
 import { Provider } from './types'
 
 async function generateAnswers(
@@ -13,9 +12,6 @@ async function generateAnswers(
   let provider: Provider
   if (providerConfigs.provider === ProviderType.ChatGPT) {
     provider = new SPOJProvider()//token)
-  } else if (providerConfigs.provider === ProviderType.GPT3) {
-    const { apiKey, model } = providerConfigs.configs[ProviderType.GPT3]!
-    provider = new OpenAIProvider(apiKey, model)
   } else {
     throw new Error(`Unknown provider ${providerConfigs.provider}`)
   }
