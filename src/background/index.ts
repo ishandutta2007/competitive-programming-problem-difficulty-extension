@@ -46,7 +46,7 @@ async function generateAnswers(
             return
           } else {
             // console.log("event.data",event.data)
-            Object.assign(event.data, {"problem_ids": problem_id});
+            Object.assign(event.data, {"problem_id": problem_id});
             console.log("event.data",event.data)
           }
           port.postMessage(event.data)

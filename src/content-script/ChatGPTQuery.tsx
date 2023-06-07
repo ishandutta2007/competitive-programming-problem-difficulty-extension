@@ -17,6 +17,26 @@ interface Props {
   onStatusChange?: (status: QueryStatus) => void
 }
 
+function get_elements_by_inner(word) {
+  let res = []
+  let elems = [...document.getElementsByTagName('a')];
+  elems.forEach((elem) => {
+      if(elem.outerHTML.includes(word)) {
+          res.push(elem)
+      }
+  })
+  return(res)
+}
+
+function componentToHex(c) {
+  var hex = c.toString(16);
+  return hex.length == 1 ? "0" + hex : hex;
+}
+
+function rgbToHex(r, g, b) {
+  return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
+
 function ChatGPTQuery(props: Props) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [answer, setAnswer] = useState<Answer | null>(null)
@@ -89,63 +109,34 @@ function ChatGPTQuery(props: Props) {
 
   if (answer) {
     console.log("Final answer", answer);
-    answer.score = answer.score + "XXX";
-    return (
-      <div className="markdown-body gpt-markdown" id="gpt-answer" dir="auto">
-        <div className="gpt-header">
-          <span className="font-bold">Spoj Difficulty</span>
-          <span className="cursor-pointer leading-[0]" onClick={openOptionsPage}>
-            <GearIcon size={14} />
-          </span>
-          <span className="mx-2 text-base text-gray-500">{`"${props.promptSource}" prompt is used`}</span>
-        </div>
-        <ReactMarkdown rehypePlugins={[[rehypeHighlight, { detect: true }]]}>
-          {answer.score}
-        </ReactMarkdown>
-      </div>
-    )
+    let matching_elems = get_elements_by_inner(answer.problem_id);
+    let desired_matching_elem = undefined;
+    for(let i = 0; i < matching_elems.length; i++) {
+      if (matching_elems[i].text == answer.problem_id) {
+        desired_matching_elem = matching_elems[i];
+        break;
+      }
+    }
+    if (desired_matching_elem){
+      let bghex = rgbToHex(Math.round(answer.score), 0, 0);
+      desired_matching_elem.style.backgroundColor = bghex.toString();
+      // console.log("set bgcol of ", answer.problem_id, "to", bghex.toString(), "(", Math.round(answer.score), ")");
+    }
+    // return (
+    //   <div className="markdown-body gpt-markdown" id="gpt-answer" dir="auto">
+    //   </div>
+    // )
   }
 
-  if (error === 'UNAUTHORIZED' || error === 'CLOUDFLARE') {
-    return (
-      <p>
-        Please login and pass Cloudflare check at{' '}
-        <a href="https://chat.openai.com" target="_blank" rel="noreferrer">
-          chat.openai.com
-        </a>
-        {retry > 0 &&
-          (() => {
-            if (isBraveBrowser()) {
-              return (
-                <span className="block mt-2">
-                  Still not working? Follow{' '}
-                  <a href="https://github.com/wong2/chat-gpt-google-extension#troubleshooting">
-                    Brave Troubleshooting
-                  </a>
-                </span>
-              )
-            } else {
-              return (
-                <span className="italic block mt-2 text-xs">
-                  OpenAI requires passing a security check every once in a while. If this keeps
-                  happening, change AI provider to OpenAI API in the extension options.
-                </span>
-              )
-            }
-          })()}
-      </p>
-    )
-  }
-  if (error) {
-    return (
-      <p>
-        Failed to load response from ChatGPT:
-        <span className="break-all block">{error}</span>
-      </p>
-    )
-  }
+  return (
+    <p></p>
+  )
+  return (
+    <p>
+    </p>
+  )
 
-  return <p className="text-[#b6b8ba] animate-pulse">Waiting for ChatGPT solution...</p>
+  // return <p className="text-[#b6b8ba] animate-pulse">Waiting for ChatGPT solution...</p>
 }
 
 export default memo(ChatGPTQuery)

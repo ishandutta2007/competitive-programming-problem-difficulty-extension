@@ -44,7 +44,7 @@ export class ChatGPTProvider implements Provider {
           console.debug('sse message create_date', create_date)
           const yrs = k/1000/86400/365
           console.debug('sse message create_date', k, yrs)
-          const score = yrs/users_accepted
+          const score = Math.min(255,5*2550*yrs/users_accepted)
           console.debug('sse message score', score)
           console.debug('sse message users_accepted', users_accepted)
           params.onEvent({
@@ -82,7 +82,7 @@ export class ChatGPTProvider implements Provider {
           console.debug('sse message create_date', create_date)
           const yrs = k/1000/86400/365
           console.debug('sse message create_date', k, yrs)
-          const score = yrs/users_accepted
+          const score = Math.min(255,5*2550*yrs/users_accepted)
           console.debug('sse message score', score)
           console.debug('sse message users_accepted', users_accepted)          
           params.onEvent({
